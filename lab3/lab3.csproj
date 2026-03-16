@@ -55,10 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Creators\CircleCreator.cs" />
-    <Compile Include="Creators\ShapeCreator.cs" />
-    <Compile Include="Creators\SquareCreator.cs" />
-    <Compile Include="Creators\TriangleCreator.cs" />
+    <Compile Include="Factories\BlueShapeFactory.cs" />
+    <Compile Include="Factories\GreenShapeFactory.cs" />
+    <Compile Include="Factories\IShapeFactory.cs" />
+    <Compile Include="Factories\RedShapeFactory.cs" />
     <Compile Include="Shapes\Circle.cs" />
     <Compile Include="Shapes\IShape.cs" />
     <Compile Include="Shapes\Square.cs" />

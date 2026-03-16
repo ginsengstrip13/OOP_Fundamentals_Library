@@ -7,12 +7,19 @@ namespace lab3
 {
     public class Triangle : IShape
     {
-        public void Draw(Canvas canvas, Brush color, double x, double y)
+        private readonly Brush _color;
+
+        public Triangle(Brush color)
+        {
+            _color = color;
+        }
+
+        public void Draw(Canvas canvas, double x, double y)
         {
             Polygon triangle = new Polygon
             {
                 Points = new PointCollection { new Point(30, 0), new Point(0, 60), new Point(60, 60) },
-                Fill = color
+                Fill = _color
             };
             Canvas.SetLeft(triangle, x);
             Canvas.SetTop(triangle, y);

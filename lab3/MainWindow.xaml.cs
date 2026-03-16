@@ -1,47 +1,52 @@
-﻿using System.Collections.Generic;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace lab3
 {
     public partial class MainWindow : Window
     {
-        private readonly List<ShapeCreator> _creators;
-
         public MainWindow()
         {
             InitializeComponent();
-
-            _creators = new List<ShapeCreator>
-            {
-                new CircleCreator(),
-                new SquareCreator(),
-                new TriangleCreator()
-            };
         }
 
         private void ColorSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (DrawingCanvas == null) return;
-
             DrawingCanvas.Children.Clear();
 
             var selectedItem = (ComboBoxItem)ColorSelector.SelectedItem;
             if (selectedItem?.Tag == null) return;
 
             string colorTag = selectedItem.Tag.ToString();
-            Brush selectedBrush = (Brush)new BrushConverter().ConvertFromString(colorTag);
 
-            double currentX = 50;
-            double currentY = 50;
-
-            foreach (var creator in _creators)
+            // 1. Выбираем нужную фабрику в зависимости от темы
+            IShapeFactory factory = null;
+            switch (colorTag)
             {
-                IShape shape = creator.CreateShape();
-                shape.Draw(DrawingCanvas, selectedBrush, currentX, currentY);
-                currentX += 100;
+                case "Red":
+                    factory = new RedShapeFactory();
+                    break;
+                case "Blue":
+                    factory = new BlueShapeFactory();
+                    break;
+                case "Green":
+                    factory = new GreenShapeFactory();
+                    break;
             }
+
+            if (factory == null) return;
+
+            // 2. Клиентский код теперь работает ТОЛЬКО с интерфейсом абстрактной фабрики.
+            // Форма больше не знает про классы цветов (Brushes), это инкапсулировано в фабриках.
+            IShape circle = factory.CreateCircle();
+            IShape square = factory.CreateSquare();
+            IShape triangle = factory.CreateTriangle();
+
+            // 3. Рисуем фигуры, просто передавая координаты
+            circle.Draw(DrawingCanvas, 50, 50);
+            square.Draw(DrawingCanvas, 150, 50);
+            triangle.Draw(DrawingCanvas, 250, 50);
         }
     }
 }

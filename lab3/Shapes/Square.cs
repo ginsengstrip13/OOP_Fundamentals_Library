@@ -6,9 +6,16 @@ namespace lab3
 {
     public class Square : IShape
     {
-        public void Draw(Canvas canvas, Brush color, double x, double y)
+        private readonly Brush _color;
+
+        public Square(Brush color)
         {
-            Rectangle rect = new Rectangle { Width = 60, Height = 60, Fill = color };
+            _color = color;
+        }
+
+        public void Draw(Canvas canvas, double x, double y)
+        {
+            Rectangle rect = new Rectangle { Width = 60, Height = 60, Fill = _color };
             Canvas.SetLeft(rect, x);
             Canvas.SetTop(rect, y);
             canvas.Children.Add(rect);
