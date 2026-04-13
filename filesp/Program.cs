@@ -47,6 +47,7 @@ namespace filesp
             ramMonitor.RunCheck(); 
             Console.WriteLine("\n=== РАБОТА СИСТЕМЫ ЗАВЕРШЕНА ===");
             Console.ReadLine();
+            Console.WriteLine("1")
         }
     }
 }
