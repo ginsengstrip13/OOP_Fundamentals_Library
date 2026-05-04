@@ -1,0 +1,52 @@
+<Window x:Class="lab11.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Телефонная книга"
+        Height="480"
+        Width="820"
+        MinHeight="420"
+        MinWidth="680">
+    <!--
+        Shell: настоящее главное окно приложения.
+        Оно не содержит логики телефонной книги, а только меню и область вывода текущего экрана.
+    -->
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Разделы">
+                <!-- Команды находятся в MainWindowViewModel, поэтому code-behind не обрабатывает Click. -->
+                <MenuItem Header="Контакты"
+                          Command="{Binding ShowContactsCommand}" />
+                <MenuItem Header="О программе"
+                          Command="{Binding ShowAboutCommand}" />
+            </MenuItem>
+        </Menu>
+
+        <Border DockPanel.Dock="Top"
+                Background="#F3F4F6"
+                BorderBrush="#D1D5DB"
+                BorderThickness="0,0,0,1"
+                Padding="10">
+            <StackPanel Orientation="Horizontal">
+                <!-- Эти кнопки дублируют пункты меню и вызывают те же команды навигации. -->
+                <Button Content="Контакты"
+                        Command="{Binding ShowContactsCommand}"
+                        MinWidth="110"
+                        Padding="12,4"
+                        Margin="0,0,8,0" />
+                <Button Content="О программе"
+                        Command="{Binding ShowAboutCommand}"
+                        MinWidth="120"
+                        Padding="12,4" />
+            </StackPanel>
+        </Border>
+
+        <!--
+            Главная область Shell. NavigationService.CurrentViewModel меняется при переходе,
+            а DataTemplate из App.xaml превращает эту ViewModel в нужный UserControl.
+        -->
+        <ContentControl Content="{Binding NavigationService.CurrentViewModel}" />
+    </DockPanel>
+</Window>
